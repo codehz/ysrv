@@ -1,0 +1,6 @@
+[submodule "deps/wsrpc"]
+	path = deps/wsrpc
+	url = https://github.com/codehz/wsrpc
+[submodule "deps/dukglue"]
+	path = deps/dukglue
+	url = https://github.com/Aloshi/dukglue
