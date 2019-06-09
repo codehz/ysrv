@@ -91,6 +91,8 @@ int main() {
         },
         1);
     duk_put_global_string(ctx, "event");
+    duk_push_bare_object(ctx);
+    duk_put_global_string(ctx, "services");
     if (int fd = open("ysrc.js", 0); fd != -1) {
       struct stat stat;
       fstat(fd, &stat);

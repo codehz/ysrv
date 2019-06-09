@@ -1,12 +1,12 @@
-export test = -> 'ok'
+export ping = -> 'pong'
 export exec = (arg) -> eval arg.command
 try
-  r = new rpc "ws+unix://./nsgod.socket", (e) !-> debug "failed: #{e}"
-  debug 1
+  services.nsgod = r = new rpc "ws+unix://./nsgod.socket", (e) !-> debug "failed to load nsgod: #{e}"
   <-! r.start
-  debug 2
-  debug "loaded!"
-  r.call "ping", {test: 23}, (e, obj) -> debug JSON.stringify obj
-  r.call "version", {}, (e, obj) -> debug JSON.stringify obj
-  r.on "started", (ev, data) -> debug data
+  nsgod_loaded = true
+  export nsgod = -> "ok"
+  r.on "output", event "nsgod.output"
+  r.on "started", event "nsgod.started"
+  r.on "stopped", event "nsgod.stopped"
+  r.on "updated", event "nsgod.updated"
 catch e then debug e
