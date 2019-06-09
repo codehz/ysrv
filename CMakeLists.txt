@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.3)
+cmake_minimum_required(VERSION 3.9)
 
 project(you-server)
 
@@ -7,10 +7,12 @@ set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 add_subdirectory(deps/wsrpc wsrpc EXCLUDE_FROM_ALL)
 add_subdirectory(deps/duktape duktape EXCLUDE_FROM_ALL)
 
-add_executable(youserver src/main.cpp src/lib.cpp)
-target_link_libraries(youserver rpcws duktape)
-set_property(TARGET youserver PROPERTY CXX_STANDARD 17)
+add_executable(ysrv src/main.cpp src/lib.cpp)
+set_property(TARGET ysrv PROPERTY CXX_STANDARD 20)
+set_property(TARGET ysrv PROPERTY INTERPROCEDURAL_OPTIMIZATION TRUE)
+target_link_libraries(ysrv rpcws duktape stdc++fs)
 
-add_executable(youserverctl src/cli.cpp)
-set_property(TARGET youserverctl PROPERTY CXX_STANDARD 17)
-target_link_libraries(youserverctl rpcws)
+add_executable(ysrvctl src/cli.cpp)
+set_property(TARGET ysrvctl PROPERTY CXX_STANDARD 20)
+set_property(TARGET ysrvctl PROPERTY INTERPROCEDURAL_OPTIMIZATION TRUE)
+target_link_libraries(ysrvctl rpcws)
